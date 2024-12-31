@@ -1,8 +1,11 @@
+# Program to generate a random number from 1-6 and display on a 7 segment display
+# Cleaned up the number generation and pin assignment
 import random
 #import RPi.GPIO as GPIO
 
-
+#generate random number
 rand_num = str(random.randint(1,6))
+#map number to 7-s display segments
 bin_dict = {
     "0": "1111110",
     "1": "1100000",
@@ -16,39 +19,17 @@ bin_dict = {
     "9": "1110011",
 }
 bitcode = bin_dict[rand_num]
-print(rand_num, bitcode)
+#print(rand_num, bitcode)
 
-if bitcode[0] == "1":
-    print("GPIO17 HIGH")
-else:
-    print("GPIO17 LOW")
+#Rpi GPIO pins used
+pins = ["17", "27", "22", "5", "6", "13", "19"]
 
-if bitcode[1] == "1":
-    print("GPIO27 HIGH")
-else:
-    print("GPIO27 LOW")
-
-if bitcode[2] == "1":
-    print("GPIO22 HIGH")
-else:
-    print("GPIO22 LOW")
-
-if bitcode[3] == "1":
-    print("GPIO5 HIGH")
-else:
-    print("GPIO5 LOW")
-
-if bitcode[4] == "1":
-    print("GPIO6 HIGH")
-else:
-    print("GPIO6 LOW")
-
-if bitcode[5] == "1":
-    print("GPIO13 HIGH")
-else:
-    print("GPIO13 LOW")
-
-if bitcode[6] == "1":
-    print("GPIO19 HIGH")
-else:
-    print("GPIO19 LOW")
+#Assign bits to GPIO pins
+for i in range(len(pins)):
+    pin = pins[i]
+    #print(pin)
+    if bitcode[i] == "0":
+        print("GPIO",pin,"LOW")
+    else:
+        print("GPIO",pin,"HIGH")
+#print(range(len(pins)))
