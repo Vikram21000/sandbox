@@ -1,0 +1,43 @@
+
+#imports libraries to read from a CSV file and allows me to use stats functions
+import pandas as pd
+import statistics as stats
+
+df = pd.read_csv(r'C:\Users\vikra\Downloads\score2 - Sheet1.csv')
+scores = list(df['Scores'])
+
+def main():
+    print(f"Mean score = {round(mean(), 2)}")
+    print(f"Median score = {median()}")
+    print(f"Modal score(s) = {mode()}")
+    print(f"Standard deviation of scores = {round(std_dev(), 2)}")
+    outliers()
+
+# Finds the mean from a set of values
+# 
+# @param  list   scores list of values
+# @return float  mean of values
+
+def mean():
+    mean = stats.mean(scores)
+    return mean
+print(mean.__doc__)
+def median():
+    median = stats.median(scores)
+    return median
+def mode():
+    mode = stats.multimode(scores)
+    return mode
+def std_dev():
+    std_dev = stats.stdev(scores)
+    return std_dev
+
+def outliers():
+    h_outlier = mean() + 2*std_dev()
+    l_outlier = mean() - 2*std_dev() 
+    print(f"Low outlier: {l_outlier} \n High outlier: {h_outlier}")
+    for _, s in df.iterrows():
+        if s["Scores"] >= h_outlier or s['Scores'] <= l_outlier:
+            print(f"The outlying score is {s['Scores']}, achieved by {s['Names']}") 
+
+main()
